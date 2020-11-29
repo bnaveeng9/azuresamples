@@ -23,9 +23,26 @@ namespace mywebapi.Controllers
             _logger = logger;
         }
 
+        [HttpGet(nameof(Welldone))]
+        public async Task<IActionResult> Welldone(string name)
+        {
+
+            var rng = new Random();
+            var res =  Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = rng.Next(-20, 55),
+                Summary = Summaries[rng.Next(Summaries.Length)]
+            });
+            
+            return Ok(res);
+        }
+
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+
+            
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
